@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Modelo Anatómico: Sistema Endocrino | Silueta Humana Realista</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #eef5f2 0%, #d4e4dc 100%);
+            font-family: 'Segoe UI', 'Roboto', 'Inter', system-ui, sans-serif;
+            color: #1a2f2a;
+            padding: 2rem 1.5rem;
+        }
+
+        .model-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 245, 0.96);
+            border-radius: 2rem;
+            box-shadow: 0 25px 45px rgba(0, 20, 10, 0.2);
+            overflow: hidden;
+        }
+
+        .model-header {
+            background: #1f4e3f;
+            color: white;
+            padding: 1.8rem 2rem;
+            text-align: center;
+        }
+
+        .model-header h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .model-header p {
+            font-size: 1rem;
+            max-width: 750px;
+            margin: 0.8rem auto 0;
+            opacity: 0.9;
+        }
+
+        .badge-model {
+            background: #3c9b7a;
+            display: inline-block;
+            padding: 0.2rem 1rem;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-top: 0.7rem;
+        }
+
+        .model-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            padding: 2rem;
+        }
+
+        .col-principal {
+            flex: 1.4;
+            min-width: 350px;
+        }
+
+        .col-side {
+            flex: 1;
+            min-width: 280px;
+            background: #fefaf2;
+            border-radius: 1.5rem;
+            padding: 1.2rem 1.5rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            border: 1px solid #cbe5db;
+        }
+
+        .diagram-wrapper {
+            background: #fffef7;
+            border-radius: 1.5rem;
+            padding: 1rem;
+            box-shadow: 0 12px 22px rgba(0, 0, 0, 0.05);
+            margin-bottom: 1.5rem;
+        }
+
+        .diagram-title {
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: #236b52;
+            font-size: 1.1rem;
+            border-left: 4px solid #2f8b6e;
+            padding-left: 12px;
+        }
+
+        .silueta-container {
+            text-align: center;
+            background: #fefcf5;
+            border-radius: 1.2rem;
+            padding: 0.5rem;
+            overflow-x: auto;
+        }
+
+        svg {
+            width: 100%;
+            max-width: 420px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            cursor: pointer;
+        }
+
+        .explanatory-card {
+            background: linear-gradient(105deg, #f5fbf8 0%, #edf6f1 100%);
+            border-radius: 1.5rem;
+            padding: 1.4rem;
+            border-left: 8px solid #3c9b7a;
+        }
+
+        .explanatory-card h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #1a5a48;
+            margin-bottom: 0.7rem;
+        }
+
+        .explanatory-card .hormone-list-detailed {
+            background: white;
+            border-radius: 1rem;
+            padding: 0.8rem 1rem;
+            margin: 0.8rem 0;
+            font-size: 0.9rem;
+        }
+
+        .organ-model-table {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            margin-top: 1rem;
+            max-height: 450px;
+            overflow-y: auto;
+            padding-right: 0.3rem;
+        }
+
+        .organ-row {
+            background: white;
+            border-radius: 1rem;
+            padding: 0.6rem 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid #cbe0d6;
+        }
+
+        .organ-row:hover {
+            background: #e0f0e8;
+            transform: translateX(5px);
+            border-color: #2f8b6e;
+        }
+
+        .organ-name {
+            font-weight: 700;
+            color: #1d5e4b;
+            font-size: 0.9rem;
+        }
+
+        .organ-hormones {
+            font-size: 0.7rem;
+            color: #4d6b60;
+            max-width: 55%;
+            text-align: right;
+        }
+
+        .btn-reset-model {
+            background: #2b7a5c;
+            border: none;
+            color: white;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            margin-top: 1rem;
+            width: 100%;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+
+        .btn-reset-model:hover {
+            background: #1f5e4b;
+        }
+
+        .footer-explain {
+            background: #e2efea;
+            padding: 1rem 2rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #2c5a4c;
+            border-top: 1px solid #c0dbcf;
+        }
+
+        .axis-info {
+            margin-top: 1rem;
+            background: #eef1ec;
+            border-radius: 1rem;
+            padding: 0.7rem;
+        }
+
+        .axis-info p {
+            font-size: 0.75rem;
+            margin: 0.2rem 0;
+        }
+
+        @media (max-width: 800px) {
+            body {
+                padding: 1rem;
+            }
+            .model-grid {
+                padding: 1rem;
+            }
+            .organ-hormones {
+                max-width: 100%;
+                text-align: left;
+                margin-top: 4px;
+            }
+            .organ-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="model-container">
+    <div class="model-header">
+        <h1>MODELO ANATÓMICO: SISTEMA ENDOCRINO</h1>
+        <p>Localización precisa de las glándulas endocrinas en la silueta humana | Comunicación hormonal y homeostasis</p>
+        <div class="badge-model">Modelo anatómico interactivo</div>
+    </div>
+
+    <div class="model-grid">
+        <div class="col-principal">
+            <div class="diagram-wrapper">
+                <div class="diagram-title">Silueta humana anatómica (seleccione una glándula)</div>
+                <div class="silueta-container">
+                    <svg viewBox="0 0 350 620" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Fondo sutil -->
+                        <rect width="350" height="620" fill="#fefcf5" rx="12" />
+                        
+                        <!-- SILUETA HUMANA COMPLETA Y PROPORCIONADA -->
+                        <!-- Cabeza redondeada -->
+                        <ellipse cx="175" cy="65" rx="35" ry="42" fill="#f0e0ce" stroke="#8b6b4d" stroke-width="1.8" />
+                        <!-- Cuello -->
+                        <rect x="160" y="100" width="30" height="20" fill="#ecdbba" stroke="#8b6b4d" stroke-width="1.2" rx="3" />
+                        
+                        <!-- Tronco (forma de torso humano con hombros y cintura) -->
+                        <path d="M145,120 L135,145 L130,170 L128,220 L127,280 L128,340 L132,390 L140,430 L155,460 L175,470 L195,460 L210,430 L218,390 L222,340 L223,280 L222,220 L220,170 L215,145 L205,120 Z" 
+                              fill="#ecdbba" stroke="#8b6b4d" stroke-width="1.8" />
+                        
+                        <!-- Brazos izquierdo y derecho (estructura clara) -->
+                        <path d="M138,145 L100,165 L82,195 L78,225 L85,235 L95,220 L110,195 L135,175" fill="#e0cbb8" stroke="#8b6b4d" stroke-width="1.5" />
+                        <path d="M212,145 L250,165 L268,195 L272,225 L265,235 L255,220 L240,195 L215,175" fill="#e0cbb8" stroke="#8b6b4d" stroke-width="1.5" />
+                        
+                        <!-- Piernas (estructura inferior) -->
+                        <path d="M155,465 L150,510 L148,560 L152,590 L165,590 L163,560 L162,510 L165,465" fill="#e0cbb8" stroke="#8b6b4d" stroke-width="1.5" />
+                        <path d="M195,465 L200,510 L202,560 L198,590 L185,590 L187,560 L188,510 L185,465" fill="#e0cbb8" stroke="#8b6b4d" stroke-width="1.5" />
+                        
+                        <!-- GLÁNDULA PINEAL - en el cerebro (parte posterior/superior) -->
+                        <ellipse cx="185" cy="48" rx="12" ry="9" fill="#e07c5c" stroke="#aa5a3c" stroke-width="1.8" data-gland="pineal" style="cursor:pointer;" />
+                        <text x="190" y="42" font-size="7" fill="#4a2a1a" font-weight="bold">Pineal</text>
+                        
+                        <!-- HIPÓFISIS - base del cerebro, silla turca -->
+                        <circle cx="175" cy="88" r="11" fill="#da7a55" stroke="#aa5a3a" stroke-width="1.8" data-gland="hipofisis" style="cursor:pointer;" />
+                        <text x="158" y="82" font-size="7" fill="#3a241a" font-weight="bold">Hipófisis</text>
+                        
+                        <!-- TIROIDES - cuello, debajo de la laringe -->
+                        <path d="M158,118 L175,112 L192,118 L195,128 L175,136 L155,128 Z" fill="#df9865" stroke="#bb7848" stroke-width="1.8" data-gland="tiroides" style="cursor:pointer;" />
+                        <text x="163" y="130" font-size="7" fill="#3a2010" font-weight="bold">Tiroides</text>
+                        
+                        <!-- TIMO - mediastino, detrás del esternón, zona pectoral alta -->
+                        <path d="M160,162 L175,152 L190,162 L187,178 L163,178 Z" fill="#ca9579" stroke="#9b6248" stroke-width="1.8" data-gland="timo" style="cursor:pointer;" />
+                        <text x="165" y="174" font-size="7" fill="#3a2418" font-weight="bold">Timo</text>
+                        
+                        <!-- GLÁNDULAS SUPRARRENALES - sobre los riñones, a nivel lumbar -->
+                        <ellipse cx="140" cy="325" rx="13" ry="9" fill="#c98754" stroke="#a8683b" stroke-width="1.8" data-gland="suprarrenales" style="cursor:pointer;" />
+                        <ellipse cx="210" cy="325" rx="13" ry="9" fill="#c98754" stroke="#a8683b" stroke-width="1.8" data-gland="suprarrenales" style="cursor:pointer;" />
+                        <text x="123" y="322" font-size="6.5" fill="#4a2e1a" font-weight="bold">Suprar.</text>
+                        <text x="215" y="322" font-size="6.5" fill="#4a2e1a" font-weight="bold">Suprar.</text>
+                        
+                        <!-- PÁNCREAS - región epigástrica, horizontal detrás del estómago -->
+                        <path d="M150,285 L168,276 L186,278 L196,290 L185,300 L167,302 L148,294 Z" fill="#d6a46e" stroke="#b57a46" stroke-width="1.8" data-gland="pancreas" style="cursor:pointer;" />
+                        <text x="160" y="296" font-size="7" fill="#3a2512" font-weight="bold">Páncreas</text>
+                        
+                        <!-- OVARIOS - pelvis femenina, a ambos lados del útero -->
+                        <ellipse cx="148" cy="445" rx="12" ry="8" fill="#bc8462" stroke="#8e5a3e" stroke-width="1.8" data-gland="ovarios" style="cursor:pointer;" />
+                        <ellipse cx="202" cy="445" rx="12" ry="8" fill="#bc8462" stroke="#8e5a3e" stroke-width="1.8" data-gland="ovarios" style="cursor:pointer;" />
+                        <text x="132" y="444" font-size="7" fill="#3a2518" font-weight="bold">Ovarios</text>
+                        <text x="206" y="444" font-size="7" fill="#3a2518" font-weight="bold">Ovarios</text>
+                        
+                        <!-- TESTÍCULOS - región escrotal, más inferior -->
+                        <ellipse cx="162" cy="530" rx="13" ry="8" fill="#b57d55" stroke="#8a5a3a" stroke-width="1.8" data-gland="testiculos" style="cursor:pointer;" />
+                        <ellipse cx="188" cy="530" rx="13" ry="8" fill="#b57d55" stroke="#8a5a3a" stroke-width="1.8" data-gland="testiculos" style="cursor:pointer;" />
+                        <text x="155" y="542" font-size="7" fill="#3a2518" font-weight="bold">Testículos</text>
+                        
+                        <!-- Nota informativa -->
+                        <text x="175" y="610" font-size="8" fill="#68543e" text-anchor="middle" font-style="italic">Seleccione una glándula en la figura</text>
+                    </svg>
+                </div>
+            </div>
+            <div class="explanatory-card" id="explanatoryModelPanel">
+                <h3 id="glandNameModel">Sistema Endocrino: Modelo Explicativo</h3>
+                <p id="glandFunctionModel">Este modelo anatómico-funcional muestra la ubicación precisa de las principales glándulas endocrinas en la silueta humana. Cada una secreta hormonas que actúan como mensajeros químicos, regulando metabolismo, crecimiento, reproducción y respuesta al estrés.</p>
+                <div id="hormoneModelContainer" class="hormone-list-detailed">
+                    Seleccione una glándula en el diagrama o en la lista lateral para explorar su función y hormonas.
+                </div>
+                <small>Las hormonas viajan por el torrente sanguíneo hasta órganos diana específicos.</small>
+            </div>
+        </div>
+
+        <div class="col-side">
+            <h3 style="color:#1e5f4a; margin-bottom: 8px; font-size: 1.3rem;">Glándulas endocrinas</h3>
+            <p style="font-size: 0.8rem; margin-bottom: 0.6rem;">Seleccione para ver explicación detallada y hormonas.</p>
+            <div class="organ-model-table" id="organListDynamic"></div>
+            <button class="btn-reset-model" id="resetModelBtn">Restablecer explicación general</button>
+            <div class="axis-info">
+                <p style="font-weight:600;">Eje regulador fundamental:</p>
+                <p>Hipotálamo → Hipófisis → Glándula efectora → Hormona → Respuesta biológica</p>
+                <p style="margin-top:6px;">Mecanismos de retroalimentación negativa y positiva mantienen la homeostasis.</p>
+            </div>
+        </div>
+    </div>
+    <div class="footer-explain">
+        Modelo anatómico interactivo del sistema endocrino | Comunicación química y regulación fisiológica | Basado en anatomía humana funcional
+    </div>
+</div>
+
+<script>
+    // Base de datos completa con información detallada
+    const endocrineModel = {
+        pineal: {
+            nombre: "Glándula Pineal",
+            funcion: "Regula los ciclos circadianos (sueño-vigilia) mediante la secreción de melatonina. Actúa como un reloj biológico interno sensible a los cambios de luz.",
+            hormonas: ["Melatonina"],
+            detalleExtra: "Influye en ritmos estacionales, neuroprotección y modulación del sueño. Se localiza en el epitálamo."
+        },
+        hipofisis: {
+            nombre: "Hipófisis (Glándula Pituitaria)",
+            funcion: "Glándula maestra: controla la actividad de otras glándulas endocrinas. Regula crecimiento, metabolismo, reproducción y homeostasis hídrica.",
+            hormonas: ["GH (Somatotropina)", "TSH", "FSH", "LH", "ACTH", "Prolactina", "Vasopresina (ADH)", "Oxitocina"],
+            detalleExtra: "Dividida en adenohipófisis (anterior) y neurohipófisis (posterior). Ubicada en la silla turca del esfenoides."
+        },
+        tiroides: {
+            nombre: "Tiroides",
+            funcion: "Controla la tasa metabólica basal, producción de energía, crecimiento y desarrollo neuronal. Esencial en la infancia.",
+            hormonas: ["Tiroxina (T4)", "Triyodotironina (T3)", "Calcitonina"],
+            detalleExtra: "La calcitonina participa en la regulación del calcio sanguíneo. Situada en la región anterior del cuello."
+        },
+        timo: {
+            nombre: "Timo",
+            funcion: "Esencial para el desarrollo del sistema inmunitario: maduración de linfocitos T. Involucrado en la inmunidad adaptativa.",
+            hormonas: ["Timopoyetina", "Timulina", "Timosina alfa 1"],
+            detalleExtra: "Alcanza su máximo tamaño en la infancia y se atrofia con la edad. Ubicado en el mediastino superior."
+        },
+        suprarrenales: {
+            nombre: "Glándulas Suprarrenales",
+            funcion: "Respuesta al estrés (lucha o huida), metabolismo de glucosa, regulación de presión arterial y balance de electrolitos.",
+            hormonas: ["Cortisol", "Aldosterona", "Adrenalina (Epinefrina)", "Noradrenalina"],
+            detalleExtra: "Corteza suprarrenal: corticoides; médula suprarrenal: catecolaminas. Situadas sobre los riñones."
+        },
+        pancreas: {
+            nombre: "Páncreas (Endocrino)",
+            funcion: "Regulación de la glucemia: insulina disminuye glucosa, glucagón la aumenta. Mantiene el equilibrio energético.",
+            hormonas: ["Insulina", "Glucagón", "Somatostatina"],
+            detalleExtra: "Los islotes de Langerhans albergan las células endocrinas (beta, alfa, delta). Localizado en la cavidad abdominal."
+        },
+        ovarios: {
+            nombre: "Ovarios",
+            funcion: "Producción de óvulos y hormonas sexuales femeninas. Regulan el ciclo menstrual, fertilidad y caracteres sexuales secundarios.",
+            hormonas: ["Estrógenos (estradiol)", "Progesterona", "Inhibina"],
+            detalleExtra: "Influyen en el tejido óseo, cardiovascular y en el mantenimiento del embarazo. Situados en la pelvis."
+        },
+        testiculos: {
+            nombre: "Testículos",
+            funcion: "Producción de espermatozoides y síntesis de testosterona. Responsables de los caracteres sexuales masculinos y la espermatogénesis.",
+            hormonas: ["Testosterona", "Inhibina"],
+            detalleExtra: "La testosterona también influye en masa muscular, densidad ósea y líbido. Ubicados en el escroto."
+        }
+    };
+
+    const organContainer = document.getElementById("organListDynamic");
+    const resetBtn = document.getElementById("resetModelBtn");
+    const glandNameEl = document.getElementById("glandNameModel");
+    const glandFunctionEl = document.getElementById("glandFunctionModel");
+    const hormoneContainer = document.getElementById("hormoneModelContainer");
+
+    function updateModelPanel(glandId) {
+        const data = endocrineModel[glandId];
+        if (!data) return;
+        glandNameEl.innerHTML = data.nombre;
+        glandFunctionEl.innerHTML = `Función: ${data.funcion}`;
+        let hormonesHtml = `<strong>Hormonas secretadas:</strong> ${data.hormonas.join(' · ')}<br>`;
+        if (data.detalleExtra) hormonesHtml += `<span style="font-size:0.8rem; display:inline-block; margin-top:6px;">📍 ${data.detalleExtra}</span>`;
+        hormoneContainer.innerHTML = hormonesHtml;
+    }
+
+    function resetGeneralExplanation() {
+        glandNameEl.innerHTML = "Sistema Endocrino: Modelo Explicativo";
+        glandFunctionEl.innerHTML = "Este modelo anatómico-funcional muestra la ubicación precisa de las principales glándulas endocrinas en la silueta humana. Cada una secreta hormonas que actúan como mensajeros químicos, regulando metabolismo, crecimiento, reproducción y respuesta al estrés.";
+        hormoneContainer.innerHTML = "Seleccione una glándula en el diagrama o en la lista lateral para explorar su función y hormonas. El sistema endocrino funciona mediante bucles de retroalimentación.";
+    }
+
+    function buildOrganList() {
+        const glandKeys = Object.keys(endocrineModel);
+        let html = '';
+        for (let key of glandKeys) {
+            const gland = endocrineModel[key];
+            const shortHormones = gland.hormonas.slice(0, 2).join(', ') + (gland.hormonas.length > 2 ? '...' : '');
+            html += `
+                <div class="organ-row" data-gland-key="${key}">
+                    <span class="organ-name">${gland.nombre}</span>
+                    <span class="organ-hormones">${shortHormones}</span>
+                </div>
+            `;
+        }
+        organContainer.innerHTML = html;
+        document.querySelectorAll('.organ-row').forEach(row => {
+            row.addEventListener('click', (e) => {
+                const gKey = row.getAttribute('data-gland-key');
+                if (gKey && endocrineModel[gKey]) {
+                    updateModelPanel(gKey);
+                    highlightSvgGland(gKey);
+                }
+            });
+        });
+    }
+
+    function highlightSvgGland(glandId) {
+        const elements = document.querySelectorAll(`[data-gland="${glandId}"]`);
+        elements.forEach(el => {
+            const originalFill = el.getAttribute('fill');
+            el.setAttribute('fill', '#FFB347');
+            el.setAttribute('stroke', '#E67E22');
+            el.setAttribute('stroke-width', '3');
+            setTimeout(() => {
+                // Restaurar colores originales según tipo de glándula
+                const colorMap = {
+                    pineal: '#e07c5c', hipofisis: '#da7a55', tiroides: '#df9865',
+                    timo: '#ca9579', suprarrenales: '#c98754', pancreas: '#d6a46e',
+                    ovarios: '#bc8462', testiculos: '#b57d55'
+                };
+                const newColor = colorMap[glandId] || '#c98754';
+                el.setAttribute('fill', newColor);
+                el.setAttribute('stroke', '#aa5a3c');
+                el.setAttribute('stroke-width', '1.8');
+            }, 700);
+        });
+    }
+
+    function bindSvgModelEvents() {
+        const svgGlands = document.querySelectorAll('[data-gland]');
+        svgGlands.forEach(el => {
+            el.addEventListener('click', (e) => {
+                e.stopPropagation();
+                let glandId = el.getAttribute('data-gland');
+                if (glandId && endocrineModel[glandId]) {
+                    updateModelPanel(glandId);
+                    highlightSvgGland(glandId);
+                }
+            });
+        });
+    }
+
+    resetBtn.addEventListener('click', () => {
+        resetGeneralExplanation();
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        buildOrganList();
+        bindSvgModelEvents();
+        resetGeneralExplanation();
+    });
+</script>
+</body>
+</html>
